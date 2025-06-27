@@ -17,5 +17,5 @@ Smartly switches between VK and YouTube videos based on user geolocation. Adds a
 2. Активируйте плагин через меню "Плагины" в WordPress.
 
 == Changelog ==
-= 1.9 =
+= 1.9.1 =
 * Первая публичная версия 
