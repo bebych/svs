@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Smart Switcher for VK and YouTube
  * Description: Автоматически подставляет видео с YouTube или VK в зависимости от геолокации пользователя.
- * Version: 1.9
+ * Version: 1.9.1
  * Author: bebych
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
