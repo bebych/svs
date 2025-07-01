@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Smart Switcher for VK and YouTube
  * Description: Автоматически подставляет видео с YouTube или VK в зависимости от геолокации пользователя.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: bebych
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,7 +47,9 @@ function ssvy_enqueue_admin_assets($hook) {
     // Подключаем CSS для модального окна
     wp_enqueue_style(
         'ssvy-admin-styles',
-        plugins_url('css/admin-dialog.css', __FILE__)
+        plugins_url('css/admin-dialog.css', __FILE__),
+        array(), // Зависимостей нет
+        '2.0.1'  // ИСПРАВЛЕНО: Добавлена версия файла
     );
 
     // Подключаем JS для кнопки QuickTags
@@ -55,7 +57,7 @@ function ssvy_enqueue_admin_assets($hook) {
         'ssvy-quicktags',
         plugins_url('js/quicktags-button.js', __FILE__),
         array('quicktags'),
-        '2.0.0',
+        '2.0.1',
         true
     );
 }
@@ -71,7 +73,7 @@ function ssvy_register_gutenberg_block() {
         'ssvy-block-editor',
         plugins_url('js/block.js', __FILE__),
         array('wp-blocks', 'wp-element', 'wp-components', 'wp-editor'),
-        '2.0.0',
+        '2.0.1',
         true
     );
     register_block_type('smart-video-switcher/video-block', array(
@@ -88,7 +90,7 @@ function ssvy_get_user_country() {
     if (!$ip) {
         return 'US'; // Возвращаем значение по умолчанию, если IP некорректен
     }
-    // Используем ipwho.is, как и раньше
+    // Используем ipwho.is
     $response = wp_remote_get("https://ipwho.is/{$ip}");
     if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
         return 'US'; // Возвращаем значение по умолчанию в случае ошибки
@@ -180,7 +182,7 @@ function ssvy_video_shortcode($atts) {
         'ssvy-frontend-script',
         plugins_url('js/frontend-script.js', __FILE__),
         [],
-        '2.0.0',
+        '2.0.1',
         true
     );
     // Передаем ID контейнера в скрипт
