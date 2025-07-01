@@ -1,6 +1,6 @@
 === Smart Switcher for VK and YouTube ===
 Contributors: bebych
-Tags: youtube, vk, video, geo, switcher, block
+Tags: youtube, vk, video, geo, block
 Requires at least: 5.0
 Tested up to: 6.8
 Stable tag: 2.0.0
