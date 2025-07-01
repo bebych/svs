@@ -1,75 +1,64 @@
-// Функция для вставки шорткода
-function insertSVSShortcode() {
-    var youtubeUrl = document.getElementById('svs-youtube-url').value;
-    var vkUrl = document.getElementById('svs-vk-url').value;
-    var width = document.getElementById('svs-width').value;
-    var height = document.getElementById('svs-height').value;
+function insertSSVYShortcode() {
+    var youtubeUrl = document.getElementById('ssvy-youtube-url').value;
+    var vkUrl = document.getElementById('ssvy-vk-url').value;
+    var width = document.getElementById('ssvy-width').value;
+    var height = document.getElementById('ssvy-height').value;
 
-    var shortcode = '[svs_video';
+    var shortcode = '[ssvy_video';
     if (youtubeUrl) shortcode += ' youtube_url="' + youtubeUrl + '"';
     if (vkUrl) shortcode += ' vk_url="' + vkUrl + '"';
     if (width) shortcode += ' width="' + width + '"';
     if (height) shortcode += ' height="' + height + '"';
     shortcode += ']';
 
-    // Вставляем шорткод в редактор
     QTags.insertContent(shortcode);
 
-    // Закрываем диалог
-    document.getElementById('svs-dialog').style.display = 'none';
-
-    // Очищаем поля
-    document.getElementById('svs-youtube-url').value = '';
-    document.getElementById('svs-vk-url').value = '';
-    document.getElementById('svs-width').value = '640';
-    document.getElementById('svs-height').value = '360';
+    var dialog = document.getElementById('ssvy-dialog');
+    if(dialog) dialog.style.display = 'none';
+    
+    // Очистка полей не требуется, так как диалог будет создаваться заново
 }
 
-// Открытие модального окна по клику на кнопку над редактором
-
 document.addEventListener('DOMContentLoaded', function() {
-    var btn = document.getElementById('svs-media-button');
+    var btn = document.getElementById('ssvy-media-button');
     if (btn) {
         btn.addEventListener('click', function() {
-            if (!document.getElementById('svs-dialog')) {
-                // Дублируем логику создания окна
-                var dialog = document.createElement('div');
-                dialog.id = 'svs-dialog';
-                dialog.style.display = 'none';
-                dialog.innerHTML = `
-                    <div class="svs-dialog-content">
-                        <div class="svs-dialog-header">
-                            <h2>Вставить Smart Video</h2>
-                        </div>
-                        <div class="svs-dialog-body">
-                            <p>
-                                <label for="svs-youtube-url">YouTube URL:</label><br>
-                                <input type="text" id="svs-youtube-url" class="svs-input" placeholder="https://youtube.com/watch?v=...">
-                            </p>
-                            <p>
-                                <label for="svs-vk-url">VK URL:</label><br>
-                                <input type="text" id="svs-vk-url" class="svs-input" placeholder="https://vk.com/video...">
-                            </p>
-                            <div class="svs-dimensions">
-                                <p>
-                                    <label for="svs-width">Ширина:</label><br>
-                                    <input type="number" id="svs-width" class="svs-input-number" value="640">
-                                </p>
-                                <p>
-                                    <label for="svs-height">Высота:</label><br>
-                                    <input type="number" id="svs-height" class="svs-input-number" value="360">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="svs-dialog-footer">
-                            <button type="button" class="button" onclick="document.getElementById('svs-dialog').style.display='none'">Отмена</button>
-                            <button type="button" class="button button-primary button-large" onclick="insertSVSShortcode()">Добавить видео</button>
+            // Удаляем старое диалоговое окно, если оно есть
+            var oldDialog = document.getElementById('ssvy-dialog');
+            if (oldDialog) oldDialog.parentNode.removeChild(oldDialog);
+
+            // Создаем новое диалоговое окно
+            var dialog = document.createElement('div');
+            dialog.id = 'ssvy-dialog';
+            dialog.innerHTML = `
+                <div class="ssvy-dialog-overlay"></div>
+                <div class="ssvy-dialog-content">
+                    <div class="ssvy-dialog-header">
+                        <h2>Insert Smart Video</h2>
+                        <button type="button" class="ssvy-dialog-close">&times;</button>
+                    </div>
+                    <div class="ssvy-dialog-body">
+                        <p><label for="ssvy-youtube-url">YouTube URL:</label><br><input type="text" id="ssvy-youtube-url" class="ssvy-input" placeholder="https://www.youtube.com/watch?v=..."></p>
+                        <p><label for="ssvy-vk-url">VK URL:</label><br><input type="text" id="ssvy-vk-url" class="ssvy-input" placeholder="https://vk.com/video..."></p>
+                        <div class="ssvy-dimensions">
+                            <p><label for="ssvy-width">Width:</label><br><input type="number" id="ssvy-width" class="ssvy-input-number" value="640"></p>
+                            <p><label for="ssvy-height">Height:</label><br><input type="number" id="ssvy-height" class="ssvy-input-number" value="360"></p>
                         </div>
                     </div>
-                `;
-                document.body.appendChild(dialog);
-            }
-            document.getElementById('svs-dialog').style.display = 'block';
+                    <div class="ssvy-dialog-footer">
+                        <button type="button" class="button ssvy-dialog-cancel">Cancel</button>
+                        <button type="button" class="button button-primary button-large" id="ssvy-insert-shortcode">Add Video</button>
+                    </div>
+                </div>`;
+            document.body.appendChild(dialog);
+
+            // Показываем окно
+            dialog.style.display = 'block';
+            
+            // Добавляем обработчики событий
+            dialog.querySelector('.ssvy-dialog-close').addEventListener('click', () => dialog.style.display = 'none');
+            dialog.querySelector('.ssvy-dialog-cancel').addEventListener('click', () => dialog.style.display = 'none');
+            dialog.querySelector('#ssvy-insert-shortcode').addEventListener('click', insertSSVYShortcode);
         });
     }
-}); 
+});
